@@ -2,7 +2,7 @@ import * as THREE from "three";
 import Expirence from "../Expirence";
 import GSAP from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger.js";
-import ASScroll from "@ashthornton/asscroll"
+import ASScroll from "@ashthornton/asscroll";
 
 export default class Controls{
     constructor(){
