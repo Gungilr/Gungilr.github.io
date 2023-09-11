@@ -1,39 +1,33 @@
 import * as THREE from "three";
 
 import { EventEmitter } from "events";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader"
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import Expirence from "../Expirence";
 
-export default class Resources extends EventEmitter{
-    constructor(assets)
-    {
+export default class Resources extends EventEmitter {
+    constructor(assets) {
         super();
-        this.expirence = new Expirence();
-        this.renderer = this.expirence.renderer;
+        this.experience = new Expirence();
+        this.renderer = this.experience.renderer;
 
         this.assets = assets;
 
         this.items = {};
-
         this.queue = this.assets.length;
         this.loaded = 0;
 
-        this.setLoader();
+        this.setLoaders();
         this.startLoading();
-
-        //console.log(assets);
     }
 
-    setLoader()
-    {
+    setLoaders() {
         this.loaders = {};
-        this.loaders.gltfLoader = new GLTFLoader().setPath();
+        this.loaders.gltfLoader = new GLTFLoader();
         this.loaders.dracoLoader = new DRACOLoader();
-        this.loaders.dracoLoader.setDecoderPath("/Expirence/Public/draco/");
+        this.loaders.dracoLoader.setDecoderPath("/draco/");
         this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader);
     }
-
     startLoading() {
         for (const asset of this.assets) {
             if (asset.type === "glbModel") {
@@ -59,21 +53,19 @@ export default class Resources extends EventEmitter{
                 this.videoTexture[asset.name].minFilter = THREE.NearestFilter;
                 this.videoTexture[asset.name].magFilter = THREE.NearestFilter;
                 this.videoTexture[asset.name].generateMipmaps = false;
-                this.videoTexture[asset.name].colorSpace = THREE.sRGBEncoding;
+                this.videoTexture[asset.name].encoding = THREE.sRGBEncoding;
 
                 this.singleAssetLoaded(asset, this.videoTexture[asset.name]);
             }
         }
     }
 
-    singleAssetLoaded(asset, file)
-    {
+    singleAssetLoaded(asset, file) {
         this.items[asset.name] = file;
         this.loaded++;
 
-        console.log(file);
-
-        if(this.loaded === this.queue)
+        if (this.loaded === this.queue) {
             this.emit("ready");
+        }
     }
 }

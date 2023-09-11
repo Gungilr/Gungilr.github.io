@@ -46,7 +46,7 @@ export default class Preloader extends EventEmitter{
                 this.timeline.to(".preloader", {
                    opacity: 0,
                    onComplete: ()=>{
-                    document.querySelector(".prelaoder").classList.add("hidden");
+                    document.querySelector(".preloader").classList.add("hidden");
                    },
                 });
         

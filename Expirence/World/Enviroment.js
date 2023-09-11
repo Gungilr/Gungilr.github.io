@@ -60,7 +60,8 @@ export default class Enviroment{
                 g: 255 / 255,
                 b: 255 / 255,
             });
-            GSAP.to(this.sunlight, {intensity: 3});
+            GSAP.to(this.sunLight, {intensity: 3});
+            console.log(this.sunLight.intensity);
             GSAP.to(this.ambientLight, {intensity: 1});
         }
     }
