@@ -1,13 +1,12 @@
 import * as THREE from "three";
 
 import { EventEmitter } from "events";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader"
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import Expirence from "../Expirence";
 
-export default class Resources extends EventEmitter{
-    constructor(assets)
-    {
+export default class Resources extends EventEmitter {
+    constructor(assets) {
         super();
         this.expirence = new Expirence();
         this.renderer = this.expirence.renderer;
@@ -25,12 +24,11 @@ export default class Resources extends EventEmitter{
         //console.log(assets);
     }
 
-    setLoader()
-    {
+    setLoader() {
         this.loaders = {};
         this.loaders.gltfLoader = new GLTFLoader().setPath();
         this.loaders.dracoLoader = new DRACOLoader();
-        this.loaders.dracoLoader.setDecoderPath("/Expirence/Public/draco/");
+        this.loaders.dracoLoader.setDecoderPath("/draco/");
         this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader);
     }
 
@@ -66,14 +64,12 @@ export default class Resources extends EventEmitter{
         }
     }
 
-    singleAssetLoaded(asset, file)
-    {
+    singleAssetLoaded(asset, file) {
         this.items[asset.name] = file;
         this.loaded++;
 
         console.log(file);
 
-        if(this.loaded === this.queue)
-            this.emit("ready");
+        if (this.loaded === this.queue) this.emit("ready");
     }
 }
